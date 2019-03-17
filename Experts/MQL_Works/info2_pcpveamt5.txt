@@ -1,0 +1,22 @@
+ROBO PCPV
+
+Sinais: Linha 1 e Linha 2
+
+Filtros: não há
+
+Regras de entrada da linha:
+Opção 1:  
+Ordem a mercado na linha 1 e outra ordem a mercado na linha 2  
+Stop e Take: padrão de robôs, definido pelo usuario
+Stop móvel: O candle que executou a entrada terá sua máxima marcada.   Quando o preço violar a máxima do candle de entrada, o stop vira para a mínima dos últimos 3 candles, como stop móvel.     
+Breakeven: permitir alimentar um %, que ao atingir, o stop venha para o breakeven
+
+Opção 2:
+No momento que o preço toca a linha 1, a máxima do candle fica marcada e a entrada ficara em startcompra quando tal preço for atingido.  Desse forma, teremos o candle como confirmação.    
+SE, a máxima do candle não for violada, e o preço segue em queda, o candle seguinte passa a ser o candle de referencia.
+No robô, eu preciso dizer “quantos candles” após a violação da linha eu posso considerar como válido para executar a entrada (supondo que faça 3 candles abaixo da linha 1; mas sem suas máximas violadas).
+
+
+OBSERVAÇÃO: 
+Ao executar a ordem na linha 1, aquela ordem que estava na linha 2 deve ser excluída.    
+Se o mercado seguir em queda, e stopar a entrada da linha 1, então o robô devera colocar uma nova entrada pela linha 2
