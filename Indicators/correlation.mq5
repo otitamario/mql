@@ -1,3 +1,5 @@
+
+
 //+------------------------------------------------------------------+
 //|                                                  Correlation.mq5 |
 //|                                               Copyright 2012, iC |
@@ -82,7 +84,7 @@ int OnCalculate(const int rates_total,
    datetime tm[1];
    bool cont=false;
 //---
-   if(prev_calculated>rates_total || 
+   if(prev_calculated>rates_total ||
       prev_calculated<=0)
      {
       limit=_SettPeriod-1;
@@ -103,7 +105,7 @@ int OnCalculate(const int rates_total,
          Print("The data is not formed yet! Wait...");
          return 0;
         }
-      else if(bars1<_SettPeriod || 
+      else if(bars1<_SettPeriod ||
          bars2<_SettPeriod)
            {
             Print("Bars is not enough to calculate!");
@@ -136,7 +138,7 @@ int OnCalculate(const int rates_total,
      }
    else
       limit=prev_calculated-1;
-//---     
+//---    
    for(i=limit;i<rates_total;i++)
      {
       averX1=0;
@@ -145,7 +147,7 @@ int OnCalculate(const int rates_total,
         {
          if(CopyBuffer(h1,0,time[i-j],1,a1)<=0 ||
             CopyBuffer(h2,0,time[i-j],1,a2)<=0)
-           {,            
+           {
             i+=_SettPeriod-j-1;
             cont=true;
             break;
