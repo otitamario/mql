@@ -6,9 +6,9 @@
 #property copyright "Copyright 2012, Rone."
 #property link      "rone.sergey@gmail.com"
 #property version   "1.00"
-#property description "Delta ZigZag определяет разворот по минимальной высоте свинга, а также идентифицирует "
-#property description "тренд по пробоям уровней локальных минимумов/максимумов и окрашивает секции "
-#property description "зигзага в цвет текущего тренда."
+#property description "Delta ZigZag determines a reversal by the minimal height of swing, and also identifies "
+#property description "a trend by breakthrough of the local minimum/maximum levels and colors "
+#property description "the zigzag sections to the current trend color."
 //--- indicator settings
 #property indicator_chart_window
 #property indicator_buffers 5
@@ -38,8 +38,8 @@ enum APPLIED_PRICE {
 };
 //---
 enum REVERSAL_MODE {
-   PIPS,          // В пипсах
-   PERCENT        // В процентах
+   PIPS,          // In pips
+   PERCENT        // In percentage
 };
 //---
 struct zzData {
@@ -50,11 +50,11 @@ struct zzData {
    bool up;
 };
 //--- input parameters
-input APPLIED_PRICE  InpAppliedPrice = HIGH_LOW;   // Применить к ценам
-input REVERSAL_MODE  InpReversalMode = PIPS;       // Режим разворота
-input int            InpPips = 500;                // Разворот в пипсах
-input double         InpPercent = 0.5;             // Разворот в %-х
-input int            InpLevels = 1;                // Кол-во уровней
+input APPLIED_PRICE  InpAppliedPrice = HIGH_LOW;   // Apply to price
+input REVERSAL_MODE  InpReversalMode = PIPS;       // Reversal mode
+input int            InpPips = 500;                // Reversal in pips
+input double         InpPercent = 0.5;             // Reversal in %
+input int            InpLevels = 1;                // Levels number
 //--- indicator buffers
 double         ZzBtmBuffer[];
 double         ZzTopBuffer[];
