@@ -41,14 +41,16 @@ int OnInit()
    SetIndexBuffer(1,MiddleBuffer,INDICATOR_CALCULATIONS);
    SetIndexBuffer(2,UpperBuffer ,INDICATOR_CALCULATIONS);
    SetIndexBuffer(3,LowerBuffer ,INDICATOR_CALCULATIONS); 
-    IndicatorSetInteger(INDICATOR_DIGITS,_Digits+2);
+   ArraySetAsSeries(BLGBuffer,true);
+   ArraySetAsSeries(MiddleBuffer,true);
+   ArraySetAsSeries(UpperBuffer,true);
+   ArraySetAsSeries(LowerBuffer,true);
+    if(Bars(_Symbol,_Period)<60)
+  {
+  Alert("We have less than 60 bars for Indicator exited now!!");
+  return (-1);
   
-//    if(Bars(_Symbol,_Period)<60)
-//  {
-//  Alert("We have less than 60 bars for Indicator exited now!!");
-//  return (-1);
-//  
-//  }
+  }
    bbhandle=iBands(NULL,0,BBPeriod,BBShift,StdDeviation,appliedprc);
     if(bbhandle<0){
   Alert("Can not create handle ",GetLastError(),"!!");
@@ -72,42 +74,20 @@ int OnCalculate(const int rates_total,
                 const int &spread[])
   {
 //---
-     int    i,limit;
-//--- check for bars count
-   if(rates_total<BBPeriod)
-      return(0);
-   int calculated=BarsCalculated(bbhandle);
-   if(calculated<rates_total)
+   ArraySetAsSeries(close,true);
+   if(BarsCalculated(bbhandle)<rates_total) return(0);
+   if(CopyBuffer(bbhandle,0,0,rates_total,MiddleBuffer)<=0) return (0);
+   if(CopyBuffer(bbhandle,1,0,rates_total,UpperBuffer)<=0) return (0);
+   if(CopyBuffer(bbhandle,2,0,rates_total,LowerBuffer)<=0) return (0); 
+   
+   int pos=prev_calculated-1;
+   if(pos<0) pos=0;
+   for(int i=pos; i<rates_total-(BBPeriod+BBShift+1); i++)
      {
-      Print("Not all data of BB is calculated (",calculated,"bars ). Error",GetLastError());
-      return(0);
+    
+     BLGBuffer[i]=(close[i]-LowerBuffer[i])/(UpperBuffer[i]-LowerBuffer[i]);
+
      }
-//--- we can copy not all data
-   int to_copy;
-   if(prev_calculated>rates_total || prev_calculated<0) to_copy=rates_total;
-   else
-     {
-      to_copy=rates_total-prev_calculated;
-      if(prev_calculated>0) to_copy++;
-     }
-//---- get ma buffer
-   if(IsStopped()) return(0); //Checking for stop flag
-   if(CopyBuffer(bbhandle,1,0,to_copy,UpperBuffer)<=0||CopyBuffer(bbhandle,2,0,to_copy,LowerBuffer)<=0||
-   CopyBuffer(bbhandle,0,0,to_copy,MiddleBuffer)<=0)
-     {
-      Print("Getting BB data is failed! Error",GetLastError());
-      return(0);
-     }
-//--- preliminary calculations
-   limit=prev_calculated-1;
-   if(limit<BBPeriod)
-      limit=BBPeriod;
-//--- the main loop of calculations
-   for(i=limit;i<rates_total && !IsStopped();i++)
-     {
-      BLGBuffer[i]=(close[i]-LowerBuffer[i])/(UpperBuffer[i]-LowerBuffer[i]);
-     }
-     
    return(rates_total);
   }
 //+------------------------------------------------------------------+

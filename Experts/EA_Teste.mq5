@@ -1,0 +1,1 @@
+HMAPeriod,HMAShift,InpMAMethod,InpMAPrice);

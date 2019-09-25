@@ -67,6 +67,7 @@ int OnInit()
 //---   
    PlotIndexSetDouble(0,PLOT_EMPTY_VALUE,0.0);
    PlotIndexSetDouble(1,PLOT_EMPTY_VALUE,0.0);
+
 //---
    ArraySetAsSeries(UpperBuffer,true);
    ArraySetAsSeries(LowerBuffer,true);
@@ -77,11 +78,6 @@ int OnInit()
    return(INIT_SUCCEEDED);
   }
 //--------FUNCTION DEFINITIONS---------------
-//+------------------------------------------------------------------+
-//|Returns value of the highest price of a specified by the shift    | 
-//|parameter bar from a corresponding chart (symbol, timeframe).     |
-//|Returns 0 if an error occurs.                                     |
-//+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 //| Custom indicator iteration function                              |
 //+------------------------------------------------------------------+
